@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class ViewController: UIViewController {
 
@@ -20,6 +21,16 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { [weak self] (_) in
+            self?.goNext()
+        }
+    }
 
+    private func goNext(){
+        let vc = MovieListViewController(nibName: "MovieListViewController", bundle: nil)
+        self.present(vc, animated: true, completion: nil)
+    }
 }
 
