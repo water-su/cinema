@@ -15,8 +15,9 @@ import UIKit
 // https://image.tmdb.org/t/p/w92/guzErWtMwIQVIbgsopD88iTTtrO.jpg
 class ImageUtil: NSObject {
 
-    static let baseUrl = "https://image.tmdb.org/t/p/"
-    class func posterUrl(path: String) -> String{
+    private static let baseUrl = "https://image.tmdb.org/t/p/"
+    class func posterUrl(path: String?) -> String?{
+        guard let path = path else {return nil}
         return baseUrl+"w500/"+path
     }
     

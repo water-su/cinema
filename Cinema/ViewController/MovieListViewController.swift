@@ -17,7 +17,7 @@ class MovieListViewController: UIViewController {
         didSet{
             tableView.dataSource = self
             tableView.delegate = self
-            tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+            tableView.register(UINib.init(nibName: "MovieTableViewCell", bundle: nil) , forCellReuseIdentifier: cellId)
         }
     }
     
@@ -51,7 +51,6 @@ class MovieListViewController: UIViewController {
     private func requestAPI(){
         APIManager.getMovieList(page: 1)
             .subscribe(onNext: { [weak self] (response, json) in
-//                DebugUtil.log(level: .Info, domain: .API, message: "\(json)")
                 guard let json = json as? [String : Any] else {return} // handle format error
                 if let datas = json["results"] as? [[String: Any]]{
                     self?.dataSource.append(contentsOf: MovieManager.shared.parse(data: datas))
@@ -79,11 +78,10 @@ extension MovieListViewController : UITableViewDataSource, UITableViewDelegate{
         return self.dataSource.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! MovieTableViewCell
         let data = self.dataSource[safe:indexPath.row]
         // enhance cell UI
-//        cell.bind(deck: data)
-        cell.textLabel?.text = data?.title
+        cell.bind(movie: data)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
