@@ -20,6 +20,9 @@ class MovieListViewController: UIViewController {
             tableView.register(UINib.init(nibName: "MovieTableViewCell", bundle: nil) , forCellReuseIdentifier: cellId)
         }
     }
+    fileprivate var currentPage = 1
+    
+    fileprivate let loadMoreToggle = PublishSubject<Int>()
     
     fileprivate let didPress = PublishSubject<Movie>()
     
@@ -32,7 +35,7 @@ class MovieListViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        self.requestAPI()
+        self.requestAPI(currentPage)
         
         didPress
             .debounce(0.25, scheduler: MainScheduler.instance)  // prevent multiple click
@@ -42,6 +45,12 @@ class MovieListViewController: UIViewController {
                 self?.open(movie)
             }).disposed(by: disposeBag)
         
+        loadMoreToggle
+            .distinctUntilChanged() // prevent load same page twice
+            .subscribe(onNext: { [weak self] (page) in
+                self?.requestAPI(page)
+            }).disposed(by: disposeBag)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,13 +58,18 @@ class MovieListViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    private func requestAPI(){
-        APIManager.getMovieList(page: 1)
+    private func requestAPI(_ page : Int){
+        DebugUtil.log(level: .Info, domain: .API, message: "get page \(page)")
+        
+        APIManager.getMovieList(page: page)
             .subscribe(onNext: { [weak self] (response, json) in
                 guard let json = json as? [String : Any] else {return} // handle format error
                 if let datas = json["results"] as? [[String: Any]]{
                     self?.dataSource.append(contentsOf: MovieManager.shared.parse(data: datas))
                     self?.tableView.reloadData()
+                }
+                if let page = json["page"] as? Int{
+                    self?.currentPage = page
                 }
             }).disposed(by: disposeBag)
     }
@@ -72,6 +86,9 @@ class MovieListViewController: UIViewController {
     private func open(_ movie: Movie?){
         guard let movie = movie else {return}
         
+    }
+    private func reload(){
+        self.dataSource.removeAll()
     }
 
 }
@@ -99,6 +116,11 @@ extension MovieListViewController : UITableViewDataSource, UITableViewDelegate{
         tableView.deselectRow(at: indexPath, animated: true)
         if let movie = self.dataSource[safe: indexPath.row]{
             didPress.onNext(movie)
+        }
+    }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row >= dataSource.count - 3{
+            self.loadMoreToggle.onNext(currentPage + 1)
         }
     }
 }
