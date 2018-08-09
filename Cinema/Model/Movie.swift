@@ -44,6 +44,8 @@ class Movie: NSObject {
     var vote_average : Int = 0
     var vote_count : Int = 0
     
+    lazy var popularityDisplayString = String(format: "%@ : %.2f", "lbl_common_popularity".localized , self.popularity)
+    
     init(data: [String:Any]) {
         for key in data.keys{
             switch key{

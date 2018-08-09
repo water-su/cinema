@@ -21,7 +21,7 @@ class MovieListViewController: UIViewController {
         }
     }
     
-    fileprivate let didPress = PublishSubject<IndexPath>()
+    fileprivate let didPress = PublishSubject<Movie>()
     
     private let disposeBag = DisposeBag()
     
@@ -36,9 +36,10 @@ class MovieListViewController: UIViewController {
         
         didPress
             .debounce(0.25, scheduler: MainScheduler.instance)  // prevent multiple click
-            .subscribe(onNext: { [weak self] (indexPath) in
+            .subscribe(onNext: { [weak self] (movie) in
                 // click on movie
                 // openMovie
+                self?.open(movie)
             }).disposed(by: disposeBag)
         
     }
@@ -68,6 +69,10 @@ class MovieListViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    private func open(_ movie: Movie?){
+        guard let movie = movie else {return}
+        
+    }
 
 }
 extension MovieListViewController : UITableViewDataSource, UITableViewDelegate{
@@ -92,6 +97,8 @@ extension MovieListViewController : UITableViewDataSource, UITableViewDelegate{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        didPress.onNext(indexPath)
+        if let movie = self.dataSource[safe: indexPath.row]{
+            didPress.onNext(movie)
+        }
     }
 }

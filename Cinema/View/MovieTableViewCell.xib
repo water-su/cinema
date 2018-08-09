@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.3.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,6 +19,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="149.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Iy6-qP-h7j">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="149.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" priority="999" constant="149.5" id="Nbp-7e-dP1"/>
+                        </constraints>
+                    </imageView>
+                    <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FvT-rw-8l7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="149.5"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="663-Mj-Lua">
                         <rect key="frame" x="10" y="5" width="90" height="120"/>
                         <constraints>
@@ -48,23 +57,32 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="5pW-Ar-ECH" secondAttribute="trailing" constant="16" id="9re-G1-79N"/>
+                    <constraint firstItem="Iy6-qP-h7j" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="A31-CB-X7e"/>
                     <constraint firstItem="4vp-Nn-Dnp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="Gm6-Ve-skN"/>
+                    <constraint firstItem="Iy6-qP-h7j" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="MxM-5G-maF"/>
                     <constraint firstAttribute="trailing" secondItem="k8w-1T-CDk" secondAttribute="trailing" constant="10" id="RW2-11-4et"/>
                     <constraint firstItem="5pW-Ar-ECH" firstAttribute="top" relation="greaterThanOrEqual" secondItem="k8w-1T-CDk" secondAttribute="bottom" id="RgP-5P-y1T"/>
+                    <constraint firstItem="FvT-rw-8l7" firstAttribute="leading" secondItem="Iy6-qP-h7j" secondAttribute="leading" id="V3T-9q-5A9"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="663-Mj-Lua" secondAttribute="bottom" constant="4.5" id="Wlf-mD-7HR"/>
                     <constraint firstAttribute="trailing" secondItem="4vp-Nn-Dnp" secondAttribute="trailing" constant="10" id="az5-KQ-Ans"/>
                     <constraint firstItem="4vp-Nn-Dnp" firstAttribute="leading" secondItem="663-Mj-Lua" secondAttribute="trailing" constant="8" id="bJk-jK-Phw"/>
                     <constraint firstItem="k8w-1T-CDk" firstAttribute="top" secondItem="4vp-Nn-Dnp" secondAttribute="bottom" constant="2" id="fcG-aW-nhj"/>
                     <constraint firstItem="5pW-Ar-ECH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="663-Mj-Lua" secondAttribute="trailing" constant="10" id="hdX-7e-RCr"/>
+                    <constraint firstItem="FvT-rw-8l7" firstAttribute="trailing" secondItem="Iy6-qP-h7j" secondAttribute="trailing" id="iyh-uH-erk"/>
+                    <constraint firstAttribute="trailing" secondItem="Iy6-qP-h7j" secondAttribute="trailing" id="mSQ-jy-SKc"/>
                     <constraint firstItem="k8w-1T-CDk" firstAttribute="leading" secondItem="4vp-Nn-Dnp" secondAttribute="leading" id="sjD-Ex-CWs"/>
                     <constraint firstAttribute="bottom" secondItem="5pW-Ar-ECH" secondAttribute="bottom" constant="10.5" id="sze-YC-LrT"/>
                     <constraint firstItem="663-Mj-Lua" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="uAN-nL-ElN"/>
+                    <constraint firstAttribute="bottom" secondItem="Iy6-qP-h7j" secondAttribute="bottom" id="uxT-cL-tMH"/>
+                    <constraint firstItem="FvT-rw-8l7" firstAttribute="top" secondItem="Iy6-qP-h7j" secondAttribute="top" id="xGS-1h-wa8"/>
+                    <constraint firstItem="FvT-rw-8l7" firstAttribute="bottom" secondItem="Iy6-qP-h7j" secondAttribute="bottom" id="yW7-La-JCJ"/>
                     <constraint firstItem="663-Mj-Lua" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="yaW-9N-JtJ"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="descLabel" destination="k8w-1T-CDk" id="ZTa-Qk-omr"/>
+                <outlet property="mBgImage" destination="Iy6-qP-h7j" id="kgT-RX-8ki"/>
                 <outlet property="mImageView" destination="663-Mj-Lua" id="HTr-jc-ed9"/>
                 <outlet property="timeLabel" destination="5pW-Ar-ECH" id="oQL-Xa-cpO"/>
                 <outlet property="titleLabel" destination="4vp-Nn-Dnp" id="9f4-Az-s86"/>

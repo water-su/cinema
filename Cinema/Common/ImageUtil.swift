@@ -16,11 +16,14 @@ import UIKit
 class ImageUtil: NSObject {
 
     private static let baseUrl = "https://image.tmdb.org/t/p/"
-    class func posterUrl(path: String?) -> String?{
+    class func posterUrl(path: String?) -> URL?{
         guard let path = path else {return nil}
-        return baseUrl+"w500/"+path
+        return URL(string: baseUrl+"w500/"+path)
     }
-    
+    class func backdropUrl(path: String?) -> URL?{
+        guard let path = path else {return nil}
+        return URL(string: baseUrl+"w780/"+path)
+    }
 }
 
 /*
