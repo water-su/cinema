@@ -18,6 +18,7 @@ class MovieListViewController: UIViewController {
             tableView.dataSource = self
             tableView.delegate = self
             tableView.register(UINib.init(nibName: "MovieTableViewCell", bundle: nil) , forCellReuseIdentifier: cellId)
+            tableView.refreshControl = self.refreshControl
         }
     }
     fileprivate var currentPage = 1
@@ -29,6 +30,13 @@ class MovieListViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     fileprivate var dataSource : [Movie] = []
+    
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(reload), for: UIControlEvents.valueChanged)
+        refreshControl.attributedTitle = NSAttributedString(string: "lbl_common_loading".localized)
+        return refreshControl
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +71,13 @@ class MovieListViewController: UIViewController {
         
         APIManager.getMovieList(page: page)
             .subscribe(onNext: { [weak self] (response, json) in
+                
+                if let refresh = self?.refreshControl, refresh.isRefreshing{
+                    refresh.endRefreshing()
+                }
+                
                 guard let json = json as? [String : Any] else {return} // handle format error
+                
                 if let datas = json["results"] as? [[String: Any]]{
                     self?.dataSource.append(contentsOf: MovieManager.shared.parse(data: datas))
                     self?.tableView.reloadData()
@@ -87,8 +101,11 @@ class MovieListViewController: UIViewController {
         guard let movie = movie else {return}
         
     }
-    private func reload(){
+    @objc private func reload(){
         self.dataSource.removeAll()
+        self.tableView.reloadData()
+        self.loadMoreToggle.onNext(0)   // to reset distinctuntil change
+        self.loadMoreToggle.onNext(1)
     }
 
 }
