@@ -21,7 +21,6 @@ class MovieListViewController: UIViewController {
             tableView.refreshControl = self.refreshControl
         }
     }
-    fileprivate var currentPage = 1 // page start from 1
     
     fileprivate var bShowEmptyView : Bool = false{
         didSet{
@@ -40,13 +39,15 @@ class MovieListViewController: UIViewController {
         return nil
     }()
     
-    fileprivate let loadMoreToggle = PublishSubject<Int>()
-    
     fileprivate let didPress = PublishSubject<Movie>()
+    
+    fileprivate let hitEnd = PublishSubject<Bool>()
+    
+    private var request : Observable<[String]> = .empty()
     
     private let disposeBag = DisposeBag()
     
-    fileprivate var dataSource : [Movie] = []
+    fileprivate var dataSource : [String] = []
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -60,8 +61,6 @@ class MovieListViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        self.requestAPI(currentPage)
-        
         didPress
             .debounce(0.25, scheduler: MainScheduler.instance)  // prevent multiple click
             .subscribe(onNext: { [weak self] (movie) in
@@ -70,12 +69,12 @@ class MovieListViewController: UIViewController {
                 self?.open(movie)
             }).disposed(by: disposeBag)
         
-        loadMoreToggle
-            .distinctUntilChanged() // prevent load same page twice
-            .subscribe(onNext: { [weak self] (page) in
-                self?.requestAPI(page)
+        hitEnd
+            .subscribe(onNext: { [weak self](_) in
+                self?.loadMore()
             }).disposed(by: disposeBag)
         
+        self.reload()
     }
 
     override func didReceiveMemoryWarning() {
@@ -83,31 +82,6 @@ class MovieListViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    private func requestAPI(_ page : Int){
-        DebugUtil.log(level: .Info, domain: .API, message: "get page \(page)")
-        
-        APIManager.getMovieList(page: page)
-            .subscribe(onNext: { [weak self] (response, json) in
-                
-                if let refresh = self?.refreshControl, refresh.isRefreshing{
-                    refresh.endRefreshing()
-                }
-                
-                guard let json = json as? [String : Any] else {
-                    // handle format error
-                    DebugUtil.log(level: .Error, domain: .API, message: "got incorrect format from getMovieList API")
-                    return
-                }
-                
-                if let datas = json["results"] as? [[String: Any]]{
-                    self?.dataSource.append(contentsOf: MovieManager.shared.parse(data: datas))
-                    self?.tableView.reloadData()
-                }
-                if let page = json["page"] as? Int{
-                    self?.currentPage = page
-                }
-            }).disposed(by: disposeBag)
-    }
 
     /*
     // MARK: - Navigation
@@ -127,8 +101,19 @@ class MovieListViewController: UIViewController {
     @objc private func reload(){
         self.dataSource.removeAll()
         self.tableView.reloadData()
-        self.loadMoreToggle.onNext(0)   // to reset distinctuntilchange
-        self.loadMoreToggle.onNext(1)
+        self.request = MovieManager.shared.requestMovies()
+        self.loadMore()
+    }
+    private func loadMore(){
+        DebugUtil.log(level: .Info, domain: .API, message: "loadmore")
+        self.request.subscribe(onNext: { [weak self] (newMovies) in
+            guard let _self = self else {return}
+            if _self.refreshControl.isRefreshing{
+                _self.refreshControl.endRefreshing()
+            }
+            _self.dataSource.append(contentsOf: newMovies)
+            _self.tableView.reloadData()
+        }).disposed(by: disposeBag)
     }
 
 }
@@ -145,7 +130,8 @@ extension MovieListViewController : UITableViewDataSource, UITableViewDelegate{
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! MovieTableViewCell
         let data = self.dataSource[safe:indexPath.row]
         // enhance cell UI
-        cell.bind(movie: data)
+        let movie = MovieManager.shared.getMovie(id: data)
+        cell.bind(movie: movie)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -156,13 +142,15 @@ extension MovieListViewController : UITableViewDataSource, UITableViewDelegate{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let movie = self.dataSource[safe: indexPath.row]{
-            didPress.onNext(movie)
+        if let id = self.dataSource[safe: indexPath.row]{
+            if let movie = MovieManager.shared.getMovie(id: id){
+                didPress.onNext(movie)
+            }
         }
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row >= dataSource.count - 3{   // almost reach bottom of table
-            self.loadMoreToggle.onNext(currentPage + 1)
+        if indexPath.row >= dataSource.count - 5{   // almost reach bottom of table
+            self.hitEnd.onNext(true)
         }
     }
 }
