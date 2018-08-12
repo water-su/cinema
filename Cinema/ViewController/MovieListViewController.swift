@@ -21,13 +21,15 @@ class MovieListViewController: UIViewController {
             tableView.refreshControl = self.refreshControl
         }
     }
-    fileprivate var currentPage = 1
+    fileprivate var currentPage = 1 // page start from 1
     
     fileprivate var bShowEmptyView : Bool = false{
         didSet{
             self.emptyView?.isHidden = !bShowEmptyView
         }
     }
+    
+    // TODO: empty view mechanism can be move to base view controller
     private lazy var emptyView : EmptyView? = {
         if let view = EmptyView.loadFromXib(){
             view.bind(type: .MovieList)
@@ -91,7 +93,11 @@ class MovieListViewController: UIViewController {
                     refresh.endRefreshing()
                 }
                 
-                guard let json = json as? [String : Any] else {return} // handle format error
+                guard let json = json as? [String : Any] else {
+                    // handle format error
+                    DebugUtil.log(level: .Error, domain: .API, message: "got incorrect format from getMovieList API")
+                    return
+                }
                 
                 if let datas = json["results"] as? [[String: Any]]{
                     self?.dataSource.append(contentsOf: MovieManager.shared.parse(data: datas))
@@ -121,7 +127,7 @@ class MovieListViewController: UIViewController {
     @objc private func reload(){
         self.dataSource.removeAll()
         self.tableView.reloadData()
-        self.loadMoreToggle.onNext(0)   // to reset distinctuntil change
+        self.loadMoreToggle.onNext(0)   // to reset distinctuntilchange
         self.loadMoreToggle.onNext(1)
     }
 

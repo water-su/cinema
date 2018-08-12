@@ -13,19 +13,19 @@ class MovieTableViewCell: UITableViewCell {
 
     @IBOutlet weak var mBgImage: UIImageView!
     @IBOutlet weak var mImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!{
+    @IBOutlet weak var detailLabel: UILabel!{
         didSet{
-            titleLabel.textColor = UIColor.white
+            detailLabel.text = "lbl_common_title".localized
         }
     }
     @IBOutlet weak var descLabel: UILabel!{
         didSet{
-            descLabel.textColor = UIColor.white
+            descLabel.text = nil
         }
     }
     @IBOutlet weak var timeLabel: UILabel!{
         didSet{
-            timeLabel.textColor = UIColor.white
+            timeLabel.text = nil
         }
     }
     override func awakeFromNib() {
@@ -42,7 +42,7 @@ class MovieTableViewCell: UITableViewCell {
     func bind(movie: Movie?){
         guard let movie = movie else {
             // handle error
-            titleLabel.text = "Something Wrong"
+            detailLabel.text = "lbl_common_error_msg".localized
             return
         }
         mImageView.sd_cancelCurrentImageLoad()
@@ -57,13 +57,13 @@ class MovieTableViewCell: UITableViewCell {
         }else{
             mBgImage.image = nil
         }
-        titleLabel.text = movie.title
+        detailLabel.text = movie.title
         descLabel.text = movie.overview
         timeLabel.text = movie.popularityDisplayString
     }
     override func prepareForReuse() {
         super.prepareForReuse()
-        titleLabel.text = nil
+        detailLabel.text = nil
         descLabel.text = nil
         timeLabel.text = nil
     }
