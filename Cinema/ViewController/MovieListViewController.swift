@@ -23,6 +23,21 @@ class MovieListViewController: UIViewController {
     }
     fileprivate var currentPage = 1
     
+    fileprivate var bShowEmptyView : Bool = false{
+        didSet{
+            self.emptyView?.isHidden = !bShowEmptyView
+        }
+    }
+    private lazy var emptyView : EmptyView? = {
+        if let view = EmptyView.loadFromXib(){
+            view.bind(type: .MovieList)
+            self.view.addSubview(view)
+            view.fit(self.view)
+            return view
+        }
+        return nil
+    }()
+    
     fileprivate let loadMoreToggle = PublishSubject<Int>()
     
     fileprivate let didPress = PublishSubject<Movie>()
@@ -111,7 +126,9 @@ class MovieListViewController: UIViewController {
 }
 extension MovieListViewController : UITableViewDataSource, UITableViewDelegate{
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.dataSource.count > 0 ? 1 : 0
+        let cnt = self.dataSource.count > 0 ? 1 : 0
+        self.bShowEmptyView = cnt == 0 ? true : false
+        return cnt
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count
@@ -136,7 +153,7 @@ extension MovieListViewController : UITableViewDataSource, UITableViewDelegate{
         }
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row >= dataSource.count - 3{
+        if indexPath.row >= dataSource.count - 3{   // almost reach bottom of table
             self.loadMoreToggle.onNext(currentPage + 1)
         }
     }

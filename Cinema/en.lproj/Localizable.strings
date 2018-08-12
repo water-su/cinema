@@ -7,3 +7,4 @@
 */
 "lbl_common_popularity" = "Popularity";
 "lbl_common_loading" = "Loading...";
+"lbl_empty_message" = "There is nothing to show here.";

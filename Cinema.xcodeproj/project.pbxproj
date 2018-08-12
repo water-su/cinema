@@ -26,8 +26,11 @@
 		4915683121185D4B00715489 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4915683021185D4B00715489 /* Movie.swift */; };
 		49156833211860B500715489 /* MovieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49156832211860B500715489 /* MovieManager.swift */; };
 		49156835211863AD00715489 /* Collection+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49156834211863AD00715489 /* Collection+extension.swift */; };
+		498E1253211EC5B1001B9A5A /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498E1252211EC5B1001B9A5A /* EmptyView.swift */; };
+		498E1255211EC5C3001B9A5A /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 498E1254211EC5C3001B9A5A /* EmptyView.xib */; };
 		49F10ADC211C50B600E9241E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 49F10ADE211C50B600E9241E /* Localizable.strings */; };
 		49F10AE1211C520A00E9241E /* String+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F10AE0211C520A00E9241E /* String+extension.swift */; };
+		49F26D10211FF999001B8D13 /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F26D0F211FF999001B8D13 /* UIView+extension.swift */; };
 		4B385F4D64A31FC8E76CB228 /* Pods_CinemaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1DD4FFC6B297FDA225ADB3 /* Pods_CinemaUITests.framework */; };
 		9CEC3D9BFED60AF2A3FC9599 /* Pods_CinemaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5762C33C90C1FDB2F2B2610E /* Pods_CinemaTests.framework */; };
 /* End PBXBuildFile section */
@@ -75,11 +78,14 @@
 		4915683021185D4B00715489 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		49156832211860B500715489 /* MovieManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieManager.swift; sourceTree = "<group>"; };
 		49156834211863AD00715489 /* Collection+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+extension.swift"; sourceTree = "<group>"; };
+		498E1252211EC5B1001B9A5A /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		498E1254211EC5C3001B9A5A /* EmptyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
 		49F10AD8211C505400E9241E /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		49F10AD9211C505400E9241E /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		49F10ADD211C50B600E9241E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		49F10ADF211C50B900E9241E /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		49F10AE0211C520A00E9241E /* String+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extension.swift"; sourceTree = "<group>"; };
+		49F26D0F211FF999001B8D13 /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
 		5348DAE93BB012D480660B39 /* Pods-Cinema.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cinema.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cinema/Pods-Cinema.debug.xcconfig"; sourceTree = "<group>"; };
 		55F73D4ECD0D07AE79019B60 /* Pods-CinemaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CinemaUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CinemaUITests/Pods-CinemaUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5762C33C90C1FDB2F2B2610E /* Pods_CinemaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CinemaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -205,6 +211,8 @@
 			children = (
 				49156823211838FD00715489 /* MovieTableViewCell.swift */,
 				49156824211838FD00715489 /* MovieTableViewCell.xib */,
+				498E1252211EC5B1001B9A5A /* EmptyView.swift */,
+				498E1254211EC5C3001B9A5A /* EmptyView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -225,6 +233,7 @@
 				4915682D211859B400715489 /* ImageUtil.swift */,
 				49156834211863AD00715489 /* Collection+extension.swift */,
 				49F10AE0211C520A00E9241E /* String+extension.swift */,
+				49F26D0F211FF999001B8D13 /* UIView+extension.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -359,6 +368,7 @@
 				491567FA211837B100715489 /* LaunchScreen.storyboard in Resources */,
 				49F10ADC211C50B600E9241E /* Localizable.strings in Resources */,
 				49156826211838FD00715489 /* MovieTableViewCell.xib in Resources */,
+				498E1255211EC5C3001B9A5A /* EmptyView.xib in Resources */,
 				491567F7211837B100715489 /* Assets.xcassets in Resources */,
 				491567F2211837AF00715489 /* Main.storyboard in Resources */,
 				491568212118388D00715489 /* MovieListViewController.xib in Resources */,
@@ -468,6 +478,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				491568292118395300715489 /* APIManager.swift in Sources */,
+				498E1253211EC5B1001B9A5A /* EmptyView.swift in Sources */,
 				49156825211838FD00715489 /* MovieTableViewCell.swift in Sources */,
 				49156833211860B500715489 /* MovieManager.swift in Sources */,
 				4915683121185D4B00715489 /* Movie.swift in Sources */,
@@ -476,6 +487,7 @@
 				49156835211863AD00715489 /* Collection+extension.swift in Sources */,
 				491567ED211837AF00715489 /* AppDelegate.swift in Sources */,
 				49F10AE1211C520A00E9241E /* String+extension.swift in Sources */,
+				49F26D10211FF999001B8D13 /* UIView+extension.swift in Sources */,
 				4915682C2118541E00715489 /* DebugUtil.swift in Sources */,
 				491567F5211837AF00715489 /* Cinema.xcdatamodeld in Sources */,
 				491568202118388D00715489 /* MovieListViewController.swift in Sources */,

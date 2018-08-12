@@ -7,3 +7,4 @@
 */
 "lbl_common_popularity" = "熱門度";
 "lbl_common_loading" = "載入中...";
+"lbl_empty_message" = "目前沒有電影可以顯示";
