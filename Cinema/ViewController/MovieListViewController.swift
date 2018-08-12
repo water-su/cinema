@@ -114,7 +114,9 @@ class MovieListViewController: UIViewController {
     */
     private func open(_ movie: Movie?){
         guard let movie = movie else {return}
-        
+        let vc = MovieViewController()
+        vc.bind(movieId: movie.id)
+        self.present(vc, animated: true)
     }
     @objc private func reload(){
         self.dataSource.removeAll()

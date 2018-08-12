@@ -7,7 +7,7 @@
 //
 
 import UIKit
-/*
+/*  in list
 {
     adult = 0;
     "backdrop_path" = "/guzErWtMwIQVIbgsopD88iTTtrO.jpg";
@@ -27,9 +27,62 @@ import UIKit
     "vote_count" = 1;
 }
 */
+/* full data
+ {
+ adult = 0;
+ "backdrop_path" = "<null>";
+ "belongs_to_collection" = "<null>";
+ budget = 0;
+ genres =     (
+ {
+ id = 28;
+ name = Action;
+ },
+ {
+ id = 12;
+ name = Adventure;
+ },
+ {
+ id = 18;
+ name = Drama;
+ },
+ {
+ id = 10752;
+ name = War;
+ }
+ );
+ homepage = "<null>";
+ id = 49046;
+ "imdb_id" = tt1016150;
+ "original_language" = en;
+ "original_title" = "All Quiet on the Western Front";
+ overview = "A young German soldier's terrifying experiences and distress on the western front during World War I.";
+ popularity = "3.906";
+ "poster_path" = "/jZWVtbxyztDTSM0LXDcE6vdVTVC.jpg";
+ "production_companies" =     (
+ );
+ "production_countries" =     (
+ );
+ "release_date" = "2018-12-31";
+ revenue = 0;
+ runtime = "<null>";
+ "spoken_languages" =     (
+ {
+ "iso_639_1" = en;
+ name = English;
+ }
+ );
+ status = Planned;
+ tagline = "";
+ title = "All Quiet on the Western Front";
+ video = 0;
+ "vote_average" = 0;
+ "vote_count" = 2;
+ }
+ */
 class Movie: NSObject {
     
-    var id : Int64 = 0
+    var id : String?
     var title : String?
     var overview : String?
     var backdrop_path : String?
@@ -44,17 +97,23 @@ class Movie: NSObject {
     var vote_average : Int = 0
     var vote_count : Int = 0
     
-    lazy var popularityDisplayString = String(format: "%@ : %.2f", "lbl_common_popularity".localized , self.popularity)
+    var genres : [[String : Any]]?
+    var spoken_language : [[String : Any]]?
+    var runtime : Int = 0
+    
+    lazy var popularityDisplayString = String(format: "%@ - %@ : %.2f", self.release_date ?? "", "lbl_common_popularity".localized , self.popularity)
     
     init(data: [String:Any]) {
         for key in data.keys{
             switch key{
             case "id":
-                self.id = data[key] as? Int64 ?? 0
+                if let value = data[key] as? Int64{
+                    self.id = String(value)
+                }
                 
             case "title":
                 self.title = data[key] as? String
-            case "overview":
+            case "overview": // synopsis
                 self.overview = data[key] as? String
             case "backdrop_path":
                 self.backdrop_path = data[key] as? String
@@ -79,12 +138,29 @@ class Movie: NSObject {
                 self.vote_average = data[key] as? Int ?? 0
             case "vote_count":
                 self.vote_count = data[key] as? Int ?? 0
+            case "genre_ids":
+                break // skipped
                 
-//            case "genre_ids":
+            // from full data
+            case "genres":  // dict
+                self.genres = data[key] as? [[String : Any]]
+            case "spoken_languages": // dict
+                self.spoken_language = data[key] as? [[String : Any]]
+            case "runtime":
+                self.runtime = data[key] as? Int ?? 0
             default:
-                DebugUtil.log(level: .Info, domain: .API, message: "unused key \(key)")
+//                DebugUtil.log(level: .Info, domain: .API, message: "unused key \(key)")
+                break
             }
         }
+    }
+    func language() -> String? {
+        return self.spoken_language?
+            .map({ (aLanguage) -> String? in
+                return aLanguage["name"] as? String
+            })
+            .flatMap{$0}
+            .joined(separator: ", ")
     }
 
 }

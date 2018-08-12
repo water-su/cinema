@@ -8,3 +8,8 @@
 "lbl_common_popularity" = "熱門度";
 "lbl_common_loading" = "載入中...";
 "lbl_empty_message" = "目前沒有電影可以顯示";
+"btn_book_now" = "馬上訂位";
+"lbl_common_language" = "語言";
+"lbl_common_title" = "片名";
+"lbl_common_overview" = "簡介";
+"lbl_common_error_msg" = "發生錯誤";

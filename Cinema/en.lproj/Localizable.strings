@@ -8,3 +8,8 @@
 "lbl_common_popularity" = "Popularity";
 "lbl_common_loading" = "Loading...";
 "lbl_empty_message" = "There is nothing to show here.";
+"btn_book_now" = "Book NOW";
+"lbl_common_language" = "Language";
+"lbl_common_title" = "Title";
+"lbl_common_overview" = "Overview";
+"lbl_common_error_msg" = "Something Wrong";

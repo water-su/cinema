@@ -47,11 +47,15 @@ class APIManager: NSObject {
         return RxAlamofire.requestJSON(.get, APIPath.movieList.path, parameters: param, encoding: URLEncoding.default, headers: nil)
     }
     
+    //API Doc: https://developers.themoviedb.org/3/movies/get-movie-details
+    
 //    http://api.themoviedb.org/3/movie/328111?
 //    api_key=328c283cd27bd1877d9080ccb1604c91
+    
     class func getMovie(id: String) -> Observable<(HTTPURLResponse, Any)>{
         let param = ["api_key": APIKey]
-        return RxAlamofire.requestJSON(.get, APIPath.movie.path, parameters: param, encoding: URLEncoding.default, headers: nil)
+        let path = String(format: APIPath.movie.path, id)
+        return RxAlamofire.requestJSON(.get, path , parameters: param, encoding: URLEncoding.default, headers: nil)
     }
     
 }
