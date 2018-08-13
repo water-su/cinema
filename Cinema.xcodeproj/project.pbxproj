@@ -33,6 +33,8 @@
 		49F26D10211FF999001B8D13 /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F26D0F211FF999001B8D13 /* UIView+extension.swift */; };
 		49F26D13211FFDEA001B8D13 /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F26D11211FFDEA001B8D13 /* MovieViewController.swift */; };
 		49F26D14211FFDEA001B8D13 /* MovieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49F26D12211FFDEA001B8D13 /* MovieViewController.xib */; };
+		49F26D2021213585001B8D13 /* Secret.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49F26D1F21213585001B8D13 /* Secret.plist */; };
+		49F26D2221213648001B8D13 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F26D2121213648001B8D13 /* Secrets.swift */; };
 		4B385F4D64A31FC8E76CB228 /* Pods_CinemaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1DD4FFC6B297FDA225ADB3 /* Pods_CinemaUITests.framework */; };
 		9CEC3D9BFED60AF2A3FC9599 /* Pods_CinemaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5762C33C90C1FDB2F2B2610E /* Pods_CinemaTests.framework */; };
 /* End PBXBuildFile section */
@@ -90,6 +92,8 @@
 		49F26D0F211FF999001B8D13 /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
 		49F26D11211FFDEA001B8D13 /* MovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
 		49F26D12211FFDEA001B8D13 /* MovieViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieViewController.xib; sourceTree = "<group>"; };
+		49F26D1F21213585001B8D13 /* Secret.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secret.plist; sourceTree = "<group>"; };
+		49F26D2121213648001B8D13 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		5348DAE93BB012D480660B39 /* Pods-Cinema.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cinema.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cinema/Pods-Cinema.debug.xcconfig"; sourceTree = "<group>"; };
 		55F73D4ECD0D07AE79019B60 /* Pods-CinemaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CinemaUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CinemaUITests/Pods-CinemaUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5762C33C90C1FDB2F2B2610E /* Pods_CinemaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CinemaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,6 +178,7 @@
 				491567EC211837AF00715489 /* AppDelegate.swift */,
 				491567EE211837AF00715489 /* ViewController.swift */,
 				491567F0211837AF00715489 /* Main.storyboard */,
+				49F26D1F21213585001B8D13 /* Secret.plist */,
 				491567F6211837B100715489 /* Assets.xcassets */,
 				491567F8211837B100715489 /* LaunchScreen.storyboard */,
 				491567FB211837B100715489 /* Info.plist */,
@@ -240,6 +245,7 @@
 				49156834211863AD00715489 /* Collection+extension.swift */,
 				49F10AE0211C520A00E9241E /* String+extension.swift */,
 				49F26D0F211FF999001B8D13 /* UIView+extension.swift */,
+				49F26D2121213648001B8D13 /* Secrets.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -377,6 +383,7 @@
 				498E1255211EC5C3001B9A5A /* EmptyView.xib in Resources */,
 				491567F7211837B100715489 /* Assets.xcassets in Resources */,
 				491567F2211837AF00715489 /* Main.storyboard in Resources */,
+				49F26D2021213585001B8D13 /* Secret.plist in Resources */,
 				491568212118388D00715489 /* MovieListViewController.xib in Resources */,
 				49F26D14211FFDEA001B8D13 /* MovieViewController.xib in Resources */,
 			);
@@ -485,6 +492,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				491568292118395300715489 /* APIManager.swift in Sources */,
+				49F26D2221213648001B8D13 /* Secrets.swift in Sources */,
 				498E1253211EC5B1001B9A5A /* EmptyView.swift in Sources */,
 				49156825211838FD00715489 /* MovieTableViewCell.swift in Sources */,
 				49156833211860B500715489 /* MovieManager.swift in Sources */,

@@ -13,6 +13,8 @@ class MovieManager: NSObject {
     
     static let shared = MovieManager()
     
+    private override init(){}
+    
     private let disposeBag = DisposeBag()
     
     private var moviePool = [String : Movie]()

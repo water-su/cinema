@@ -15,7 +15,7 @@ import RxSwift
 class APIManager: NSObject {
     
     private static let urlBase = "https://api.themoviedb.org"
-    private static let APIKey = "328c283cd27bd1877d9080ccb1604c91"
+    private static var APIKey = ""
 
     enum APIPath {
         case movieList
@@ -32,7 +32,9 @@ class APIManager: NSObject {
             return urlBase+result
         }
     }
-    
+    override init() {
+        APIManager.APIKey = Secrets.shared.getSecret(for: .APIKey) ?? ""
+    }
 //    http://api.themoviedb.org/3/discover/movie?
 //    api_key=328c283cd27bd1877d9080ccb1604c91
 //    &primary_release_date.lte=2016-12-31
