@@ -34,6 +34,7 @@ class Secrets : NSObject{
             DebugUtil.log(level: .Error, domain: .Base, message: msg)
             assert(false, msg)
         }
+        return [:]
     }()
     
     func getSecret(for key : Key) -> String?{
