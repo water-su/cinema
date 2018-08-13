@@ -13,7 +13,41 @@ class MovieManager: NSObject {
     
     static let shared = MovieManager()
     
-    private override init(){}
+    private override init(){
+        super.init()
+        requestToggle
+            .map({ (reset) in return reset ? 0 : self.currentPage + 1 })
+            .distinctUntilChanged() // prevent get same page multiple times
+            .subscribe(onNext: { [weak self] (page) in
+                APIManager.getMovieList(page: page)
+                    .subscribe(onNext: { [weak self] (response, json) in
+                        guard let json = json as? [String : Any] else {
+                            // handle format error
+                            DebugUtil.log(level: .Error, domain: .API, message: "got incorrect format from getMovieList API")
+                            return
+                        }
+                        
+                        var newMovies = [String]()
+                        if let datas = json["results"] as? [[String: Any]]{
+                            newMovies = datas.flatMap{
+                                self?.appendMovie( Movie(data: $0) )
+                            }
+                        }
+                        if let page = json["page"] as? Int{
+                            DebugUtil.log(level: .Info, domain: .API, message: "got page \(page)")
+                            self?.currentPage = page
+                        }
+                        self?.moviesPip.onNext(newMovies)
+                    }).disposed(by: self!.disposeBag)
+                
+            }).disposed(by: disposeBag)
+    }
+    
+    private var currentPage = 0
+    
+    var requestToggle = PublishSubject<Bool>()
+    
+    var moviesPip = PublishSubject<[String]>()
     
     private let disposeBag = DisposeBag()
     
@@ -32,36 +66,10 @@ class MovieManager: NSObject {
         return added
     }
     
-    func requestMovies() -> Observable<[String]>{
-        MovieManager.shared.reset()
-        var nextPage = 1    // will capture nextPage to keep request go on
-        return Observable.create({ observer -> Disposable in
-            APIManager.getMovieList(page: nextPage)
-                .subscribe(onNext: { (response, json) in
-                    guard let json = json as? [String : Any] else {
-                        // handle format error
-                        DebugUtil.log(level: .Error, domain: .API, message: "got incorrect format from getMovieList API")
-                        return
-                    }
-                    
-                    var newMovies = [String]()
-                    if let datas = json["results"] as? [[String: Any]]{
-                        newMovies = datas.flatMap{
-                            MovieManager.shared.appendMovie( Movie(data: $0) )
-                        }
-                    }
-                    if let page = json["page"] as? Int{
-                        DebugUtil.log(level: .Info, domain: .API, message: "got page \(nextPage)")
-                        nextPage = page + 1
-                    }
-                    observer.onNext( newMovies )
-                }).disposed(by: self.disposeBag)
-            return Disposables.create()
-        })
-    }
-    
     func reset(){
         self.moviePool = [:]
+        self.currentPage = 0
+        self.requestToggle.onNext(true)
     }
     
     func getMovie(id: String?) -> Movie?{

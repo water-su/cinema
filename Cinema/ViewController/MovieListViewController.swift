@@ -74,6 +74,17 @@ class MovieListViewController: UIViewController {
                 self?.loadMore()
             }).disposed(by: disposeBag)
         
+        MovieManager.shared
+            .moviesPip
+            .subscribe(onNext: { [weak self](movies) in
+                guard let _self = self else {return}
+                if _self.refreshControl.isRefreshing{
+                    _self.refreshControl.endRefreshing()
+                }
+                _self.dataSource.append(contentsOf: movies)
+                _self.tableView.reloadData()
+            }).disposed(by: disposeBag)
+        
         self.reload()
     }
 
@@ -101,19 +112,12 @@ class MovieListViewController: UIViewController {
     @objc private func reload(){
         self.dataSource.removeAll()
         self.tableView.reloadData()
-        self.request = MovieManager.shared.requestMovies()
+        MovieManager.shared.reset()
         self.loadMore()
     }
     private func loadMore(){
         DebugUtil.log(level: .Info, domain: .API, message: "loadmore")
-        self.request.subscribe(onNext: { [weak self] (newMovies) in
-            guard let _self = self else {return}
-            if _self.refreshControl.isRefreshing{
-                _self.refreshControl.endRefreshing()
-            }
-            _self.dataSource.append(contentsOf: newMovies)
-            _self.tableView.reloadData()
-        }).disposed(by: disposeBag)
+        MovieManager.shared.requestToggle.onNext(false)
     }
 
 }
