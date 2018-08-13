@@ -32,7 +32,7 @@ class APIManager: NSObject {
             return urlBase+result
         }
     }
-    override init() {
+    class func setup () {
         APIManager.APIKey = Secrets.shared.getSecret(for: .APIKey) ?? ""
     }
 //    http://api.themoviedb.org/3/discover/movie?

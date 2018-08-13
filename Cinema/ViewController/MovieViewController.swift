@@ -57,7 +57,7 @@ class MovieViewController: UIViewController {
     
     func bind(movieId : String?){
         self.movieId = movieId
-        DebugUtil.log(level: .Info, domain: .API, message: "open movie \(movieId)")
+        DebugUtil.log(level: .Info, domain: .API, message: "open movie \(movieId ?? "")")
     }
 
     /*
