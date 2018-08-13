@@ -13,3 +13,6 @@
 "lbl_common_title" = "Title";
 "lbl_common_overview" = "Overview";
 "lbl_common_error_msg" = "Something Wrong";
+"lbl_common_genres" = "Genres";
+"lbl_common_duration" = "Duration";
+"lbl_common_minutes" = "min";

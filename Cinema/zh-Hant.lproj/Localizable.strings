@@ -13,3 +13,6 @@
 "lbl_common_title" = "片名";
 "lbl_common_overview" = "簡介";
 "lbl_common_error_msg" = "發生錯誤";
+"lbl_common_genres" = "類型";
+"lbl_common_duration" = "長度";
+"lbl_common_minutes" = "分鐘";

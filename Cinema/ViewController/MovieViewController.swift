@@ -88,7 +88,7 @@ class MovieViewController: UIViewController {
         // handle UI display
         self.titleLabel.text = movie.title
         self.overviewText.text = movie.overview
-        self.detailLabel.text = "lbl_common_language".localized + ": " + (movie.language() ?? "")
+        self.detailLabel.text = movie.displayDetail()
         
         if let url = ImageUtil.posterUrl(path: movie.poster_path){
             poster.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))

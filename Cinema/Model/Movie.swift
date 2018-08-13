@@ -148,19 +148,44 @@ class Movie: NSObject {
                 self.spoken_language = data[key] as? [[String : Any]]
             case "runtime":
                 self.runtime = data[key] as? Int ?? 0
+                DebugUtil.log(level: .Info, domain: .API, message: "got time \(self.runtime)")
             default:
 //                DebugUtil.log(level: .Info, domain: .API, message: "unused key \(key)")
                 break
             }
         }
     }
-    func language() -> String? {
-        return self.spoken_language?
-            .map({ (aLanguage) -> String? in
-                return aLanguage["name"] as? String
+    func getLanguage() -> String? {
+        return self.extract(form: self.spoken_language, key: "name")
+    }
+    func getGenres() -> String? {
+        return self.extract(form: self.genres, key: "name")
+    }
+    func getDuration() -> String? {
+        return self.runtime > 0 ? "\(self.runtime) \("lbl_common_minutes".localized)" : nil
+    }
+
+    private func extract(form data: [[String:Any]]?, key : String) -> String?{
+        guard let data = data else {return nil}
+        let result = data
+            .map({ (genres) -> String? in
+                return genres["name"] as? String
             })
             .flatMap{$0}
             .joined(separator: ", ")
+        return result.count > 0 ? result : nil
     }
-
+    
+    func displayDetail() -> String?{
+        let data = [("lbl_common_language"  , self.getLanguage()),
+                    ("lbl_common_genres"    , self.getGenres()),
+                    ("lbl_common_duration"  , self.getDuration())]
+        let result = data
+            .flatMap { (arg) -> (String, String)? in
+                return arg.1 != nil ? (arg.0, arg.1!) : nil
+            }.map { (arg) -> String in
+                return arg.0.localized + ": " + arg.1
+            }.joined(separator: "\n")
+        return result
+    }
 }
