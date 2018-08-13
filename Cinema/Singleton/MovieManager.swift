@@ -51,9 +51,9 @@ class MovieManager: NSObject {
     
     private let disposeBag = DisposeBag()
     
-    private var moviePool = [String : Movie]()
+    fileprivate var moviePool = [String : Movie]()
 
-    private func appendMovie(_ movie: Movie?) -> String?{
+    fileprivate func appendMovie(_ movie: Movie?) -> String?{
         guard let movie = movie else {return nil}
         guard let id = movie.id else {return nil}
         var added : String?
@@ -77,3 +77,13 @@ class MovieManager: NSObject {
         return self.moviePool[id]
     }
 }
+#if DEBUG
+extension MovieManager {
+    public func exposeAppendMovie(_ movie: Movie?) -> String? {
+        return self.appendMovie(movie)
+    }
+    public func objectCount() -> Int{
+        return self.moviePool.keys.count
+    }
+}
+#endif

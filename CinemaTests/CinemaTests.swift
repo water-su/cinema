@@ -21,9 +21,21 @@ class CinemaTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testAddMovie() {
+        // test for duplicate movie
+        let aMovie = Movie(data: [:])
+        aMovie.id = "12345"
+        _ = MovieManager.shared.exposeAppendMovie(aMovie)
+        _ = MovieManager.shared.exposeAppendMovie(aMovie)
+        _ = MovieManager.shared.exposeAppendMovie(aMovie)
+        XCTAssert(MovieManager.shared.objectCount() == 1, "append movie function cause duplicate")
+    }
+    func testAPIKey(){
+        if let apiKey = Secrets.shared.getSecret(for: .APIKey){
+            XCTAssert(apiKey.count > 0, "API Key length = 0")
+        }else{
+            XCTAssert(false, "Missing API Key")
+        }
     }
     
     func testPerformanceExample() {
