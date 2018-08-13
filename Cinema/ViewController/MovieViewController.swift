@@ -35,7 +35,7 @@ class MovieViewController: UIViewController {
         }
     }
     
-    
+    private var bookingPath: String?
     
     private var movieId: String?
     
@@ -89,6 +89,9 @@ class MovieViewController: UIViewController {
         self.titleLabel.text = movie.title
         self.overviewText.text = movie.overview
         self.detailLabel.text = movie.displayDetail()
+        self.bookingPath = movie.bookingPage
+        
+        self.actionBtn.isHidden = self.bookingPath == nil ? true : false
         
         if let url = ImageUtil.posterUrl(path: movie.poster_path){
             poster.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
@@ -103,8 +106,8 @@ class MovieViewController: UIViewController {
     }
     @IBAction func didClickBookNow(_ sender: Any) {
         // open url
-        // http://www.cathaycineplexes.com.sg/
-        if let url = URL(string: "http://www.cathaycineplexes.com.sg/"){
+        guard let path = self.bookingPath else {return}
+        if let url = URL(string: path){
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             } else {

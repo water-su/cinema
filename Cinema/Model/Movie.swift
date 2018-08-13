@@ -100,6 +100,8 @@ class Movie: NSObject {
     var spoken_language : [[String : Any]]?
     var runtime : Int = 0
     
+    var bookingPage: String = "http://www.cathaycineplexes.com.sg/"
+    
     lazy var popularityDisplayString = String(format: "%@ - %@ : %.2f", self.release_date ?? "", "lbl_common_popularity".localized , self.popularity)
     
     init(data: [String:Any]) {
