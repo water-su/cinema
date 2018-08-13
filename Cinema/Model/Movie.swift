@@ -27,59 +27,59 @@ import UIKit
     "vote_count" = 1;
 }
 */
-/* full data
- {
- adult = 0;
- "backdrop_path" = "<null>";
- "belongs_to_collection" = "<null>";
- budget = 0;
- genres =     (
- {
- id = 28;
- name = Action;
- },
- {
- id = 12;
- name = Adventure;
- },
- {
- id = 18;
- name = Drama;
- },
- {
- id = 10752;
- name = War;
- }
- );
- homepage = "<null>";
- id = 49046;
- "imdb_id" = tt1016150;
- "original_language" = en;
- "original_title" = "All Quiet on the Western Front";
- overview = "A young German soldier's terrifying experiences and distress on the western front during World War I.";
- popularity = "3.906";
- "poster_path" = "/jZWVtbxyztDTSM0LXDcE6vdVTVC.jpg";
- "production_companies" =     (
- );
- "production_countries" =     (
- );
- "release_date" = "2018-12-31";
- revenue = 0;
- runtime = "<null>";
- "spoken_languages" =     (
- {
- "iso_639_1" = en;
- name = English;
- }
- );
- status = Planned;
- tagline = "";
- title = "All Quiet on the Western Front";
- video = 0;
- "vote_average" = 0;
- "vote_count" = 2;
- }
- */
+/*  full data
+{
+    adult = 0;
+    "backdrop_path" = "<null>";
+    "belongs_to_collection" = "<null>";
+    budget = 0;
+    genres =     (
+        {
+            id = 28;
+            name = Action;
+    },
+        {
+            id = 12;
+            name = Adventure;
+    },
+        {
+            id = 18;
+            name = Drama;
+    },
+        {
+            id = 10752;
+            name = War;
+    }
+    );
+    homepage = "<null>";
+    id = 49046;
+    "imdb_id" = tt1016150;
+    "original_language" = en;
+    "original_title" = "All Quiet on the Western Front";
+    overview = "A young German soldier's terrifying experiences and distress on the western front during World War I.";
+    popularity = "3.906";
+    "poster_path" = "/jZWVtbxyztDTSM0LXDcE6vdVTVC.jpg";
+    "production_companies" =     (
+    );
+    "production_countries" =     (
+    );
+    "release_date" = "2018-12-31";
+    revenue = 0;
+    runtime = "<null>";
+    "spoken_languages" =     (
+        {
+            "iso_639_1" = en;
+            name = English;
+        }
+    );
+    status = Planned;
+    tagline = "";
+    title = "All Quiet on the Western Front";
+    video = 0;
+    "vote_average" = 0;
+    "vote_count" = 2;
+}
+*/
 class Movie: NSObject {
     
     var id : String?
@@ -88,7 +88,6 @@ class Movie: NSObject {
     var backdrop_path : String?
     var poster_path : String?
     var adult : Int = 0
-//    var genre_ids
     var original_language : String?
     var original_title : String?
     var popularity : Double = 0
@@ -148,7 +147,6 @@ class Movie: NSObject {
                 self.spoken_language = data[key] as? [[String : Any]]
             case "runtime":
                 self.runtime = data[key] as? Int ?? 0
-                DebugUtil.log(level: .Info, domain: .API, message: "got time \(self.runtime)")
             default:
 //                DebugUtil.log(level: .Info, domain: .API, message: "unused key \(key)")
                 break
@@ -188,4 +186,5 @@ class Movie: NSObject {
             }.joined(separator: "\n")
         return result
     }
+    
 }

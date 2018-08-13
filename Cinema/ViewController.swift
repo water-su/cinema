@@ -24,6 +24,7 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { [weak self] (_) in
+            // TODO: prepare for splash screen or others
             self?.goNext()
         }
     }
