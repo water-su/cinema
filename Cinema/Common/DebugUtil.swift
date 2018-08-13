@@ -18,6 +18,7 @@ class DebugUtil: NSObject {
     enum Domain : String{
         case API
         case UI
+        case Base
     }
     static func log(level: Level, domain: Domain, message: String){
         print("\(level.rawValue): \(domain) - \(message)")

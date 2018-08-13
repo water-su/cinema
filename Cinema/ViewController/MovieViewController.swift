@@ -57,7 +57,7 @@ class MovieViewController: UIViewController {
     
     func bind(movieId : String?){
         self.movieId = movieId
-        DebugUtil.log(level: .Info, domain: .API, message: "open movie \(movieId ?? "")")
+        DebugUtil.log(level: .Info, domain: .UI, message: "open movie \(movieId ?? "")")
     }
 
     /*
@@ -75,7 +75,7 @@ class MovieViewController: UIViewController {
         APIManager
             .getMovie(id: movieId)
             .subscribe(onNext: { [weak self] (response, json) in
-//                DebugUtil.log(level: .Info, domain: .API, message: "\(json)")
+//                DebugUtil.log(level: .Info, domain: .UI, message: "\(json)")
                 if let data = json as? [String : Any]{
                     let movie = Movie(data: data)
                     self?.moviePip.onNext(movie)

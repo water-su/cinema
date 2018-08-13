@@ -31,7 +31,7 @@ class Secrets : NSObject{
             return dict
         }else{
             let msg = "Must have secret file"
-            DebugUtil.log(level: .Error, domain: .API, message: msg)
+            DebugUtil.log(level: .Error, domain: .Base, message: msg)
             assert(false, msg)
         }
     }()
@@ -41,7 +41,7 @@ class Secrets : NSObject{
             return value
         }else{
             let msg = "Request invalid api key \(key.rawValue)"
-            DebugUtil.log(level: .Error, domain: .API, message: msg)
+            DebugUtil.log(level: .Error, domain: .Base, message: msg)
             assert(false, msg)
         }
         return nil

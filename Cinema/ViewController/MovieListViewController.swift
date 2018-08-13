@@ -116,7 +116,7 @@ class MovieListViewController: UIViewController {
         self.loadMore()
     }
     private func loadMore(){
-        DebugUtil.log(level: .Info, domain: .API, message: "loadmore")
+        DebugUtil.log(level: .Info, domain: .UI, message: "loadmore")
         MovieManager.shared.requestToggle.onNext(false)
     }
 
