@@ -19,8 +19,13 @@ class MovieManager: NSObject {
             .map({ (reset) in return reset ? 0 : self.currentPage + 1 })
             .distinctUntilChanged() // prevent get same page multiple times
             .subscribe(onNext: { [weak self] (page) in
+                
+                guard let _self = self else {return}
+                
                 APIManager.getMovieList(page: page)
                     .subscribe(onNext: { [weak self] (response, json) in
+                        guard let _self = self else {return}
+                        
                         guard let json = json as? [String : Any] else {
                             // handle format error
                             DebugUtil.log(level: .Error, domain: .API, message: "got incorrect format from getMovieList API")
@@ -30,15 +35,16 @@ class MovieManager: NSObject {
                         var newMovies = [String]()
                         if let datas = json["results"] as? [[String: Any]]{
                             newMovies = datas.flatMap{
-                                self?.appendMovie( Movie(data: $0) )
+                                _self.appendMovie( Movie(data: $0) )
                             }
                         }
                         if let page = json["page"] as? Int{
                             DebugUtil.log(level: .Info, domain: .API, message: "got page \(page)")
-                            self?.currentPage = page
+                            _self.currentPage = page
                         }
-                        self?.moviesPip.onNext(newMovies)
-                    }).disposed(by: self!.disposeBag)
+                        _self.moviesPip.onNext(newMovies)
+                
+                    }).disposed(by: _self.disposeBag)
                 
             }).disposed(by: disposeBag)
     }
