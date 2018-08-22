@@ -15,3 +15,10 @@ extension String{
     }
     
 }
+extension Date{
+    func toString(format: String = "yyyy-MM-dd") -> String{
+        let fmt = DateFormatter()
+        fmt.dateFormat = format
+        return fmt.string(from: self)
+    }
+}

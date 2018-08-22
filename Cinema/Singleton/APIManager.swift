@@ -42,8 +42,9 @@ class APIManager: NSObject {
 //    &page=1
     
     class func getMovieList(page: Int) -> Observable<(HTTPURLResponse, Any)>{
+        let date = Date().toString()
         let param : [String : Any] = ["api_key" : APIKey,
-                                      "primary_release_date.lte" : "2016-12-31",
+                                      "primary_release_date.lte" : date,
                                       "sort_by" : "release_date.desc",
                                       "page" : page]
         return RxAlamofire.requestJSON(.get, APIPath.movieList.path, parameters: param, encoding: URLEncoding.default, headers: nil)
