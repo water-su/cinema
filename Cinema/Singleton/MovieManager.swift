@@ -59,7 +59,7 @@ class MovieManager: NSObject {
     
     fileprivate var moviePool = [String : Movie]()
 
-    fileprivate func appendMovie(_ movie: Movie?) -> String?{
+    func appendMovie(_ movie: Movie?) -> String?{
         guard let movie = movie else {return nil}
         guard let id = movie.id else {return nil}
         var added : String?

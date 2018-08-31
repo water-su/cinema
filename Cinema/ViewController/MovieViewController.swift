@@ -83,6 +83,7 @@ class MovieViewController: UIViewController {
                 if let data = json as? [String : Any]{
                     let movie = Movie(data: data)
                     self?.moviePip.onNext(movie)
+                    _ = MovieManager.shared.appendMovie(movie)
                 }
             }).disposed(by: disposeBag)
     }
