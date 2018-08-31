@@ -47,6 +47,10 @@ class MovieViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        if let cachedMovie = MovieManager.shared.getMovie(id: self.movieId){
+            self.bind(cachedMovie)
+        }
     
         self.moviePip.subscribe(onNext: { (movie) in
             self.bind(movie)
